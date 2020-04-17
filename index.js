@@ -1,15 +1,14 @@
-function squareObj () {
-    this.square = data => {
-        if (parseInt(data) === data) {
-            return data*data;
+const squareObject = new Proxy (new Object(), {
+    get(object, key) {
+        if (!isNaN(parseInt(key))) {
+            return key*key;
         }
-    
-        if (typeof data === 'string') {
-            return new Error('Oops');
-        }
+        return new Error('Oops');    
     }
-}
+})
 
-const obj1 = new squareObj();
+squareObject[2] = 'number';
+squareObject.text = 'text';
 
-console.log(obj1.square(2));
+console.log(squareObject[2]);
+console.log(squareObject.text);
